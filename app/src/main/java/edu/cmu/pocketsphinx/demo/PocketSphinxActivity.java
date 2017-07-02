@@ -58,7 +58,7 @@ public class PocketSphinxActivity extends Activity implements
     /* Named searches allow to quickly reconfigure the decoder */
     private static final String KWS_SEARCH = "wakeup";
     private static final String FORECAST_SEARCH = "forecast";
-    private static final String DIGITS_SEARCH = "digits";
+    private static final String DIGITS_SEARCH = "digit";
     private static final String PHONE_SEARCH = "phones";
     private static final String MENU_SEARCH = "menu";
 
