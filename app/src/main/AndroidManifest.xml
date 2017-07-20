@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
+    <service android:name="com.me.android.test.PocketSphinxVoiceRecognitionService"
+        android:enabled="true"
+        android:exported="false" />
     <application
         android:allowBackup="false"
         android:icon="@drawable/icon"

@@ -70,6 +70,7 @@ public class PocketSphinxActivity extends Activity implements
 
     private SpeechRecognizer recognizer;
     private HashMap<String, Integer> captions;
+    private int temp = 1;
 
     @Override
     public void onCreate(Bundle state) {
@@ -117,7 +118,7 @@ public class PocketSphinxActivity extends Activity implements
                     ((TextView) findViewById(R.id.caption_text))
                             .setText("Failed to init recognizer " + result);
                 } else {
-                    switchSearch(KWS_SEARCH);
+                    switchSearch(MENU_SEARCH);
                 }
             }
         }.execute();
@@ -158,9 +159,12 @@ public class PocketSphinxActivity extends Activity implements
             return;
 
         String text = hypothesis.getHypstr();
-        if (text.equals(KEYPHRASE))
+
+        if (temp == 1) {
             switchSearch(MENU_SEARCH);
-        else if (text.equals(DIGITS_SEARCH))
+            System.out.println("temp is:" + temp);
+            temp++;
+        }else if (text.equals(DIGITS_SEARCH))
             switchSearch(DIGITS_SEARCH);
         else if (text.equals(PHONE_SEARCH))
             switchSearch(PHONE_SEARCH);
@@ -191,18 +195,18 @@ public class PocketSphinxActivity extends Activity implements
      */
     @Override
     public void onEndOfSpeech() {
-        if (!recognizer.getSearchName().equals(KWS_SEARCH))
-            switchSearch(KWS_SEARCH);
+        if (!recognizer.getSearchName().equals(DIGITS_SEARCH))
+            switchSearch(FORECAST_SEARCH);
     }
 
     private void switchSearch(String searchName) {
         recognizer.stop();
 
         // If we are not spotting, start listening with timeout (10000 ms or 10 seconds).
-        if (searchName.equals(KWS_SEARCH))
+        if (searchName.equals(MENU_SEARCH))
             recognizer.startListening(searchName);
         else
-            recognizer.startListening(searchName, 10000);
+            recognizer.startListening(searchName, 15000);
 
         String caption = getResources().getString(captions.get(searchName));
         ((TextView) findViewById(R.id.caption_text)).setText(caption);
@@ -252,6 +256,6 @@ public class PocketSphinxActivity extends Activity implements
 
     @Override
     public void onTimeout() {
-        switchSearch(KWS_SEARCH);
+        switchSearch(MENU_SEARCH);
     }
 }
